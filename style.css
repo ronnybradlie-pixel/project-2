@@ -108,7 +108,7 @@
           padding: 80px 50px;
           display: flex;
           align-items: center;
-          background-color: #151515;
+          background-color: #101010;
           border-radius: 10px;
           margin: 20px 0;
         }
@@ -309,6 +309,62 @@
     footer{
     text-align: center;
     padding: 20px;
+    background-color: #edebeb;
+    color: #0f0e0e;
    }
 
+   .signin.body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: poppins,sans-serif;
+   }
+
+   .card{
+    background: #100f0f;
+    padding: 30px;
+    border-radius: 15px;
+   }
+
+   .register{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+   }
+
+   .register button{
+    width: 50%;
+    padding: 10px;
+    background: #deaaaa;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+   }
+
+   .form{
+    flex-direction: column;
+   }
+
+   .form input{
+    padding: 15px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+   }
+
+   .submit-btn {
+    padding: 12px;
+    border: none;
+    background: #0f0e0e;
+    color: #fff;
+    border-radius: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  .submit-btn:hover {
+  background: #171616;
+
+  }
+   
        
