@@ -133,6 +133,78 @@ class FlickerApp {
         });
     }
 
+    //this is for authentication
+class UserAuth {
+    constructor() {
+        this.users = JSON.parse(localStorage.getItem("users")) || [];
+        this.currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+    }
+
+    signup(username, email, password) {
+        const existing = this.users.find(u => u.email === email);
+        if (existing) return { success: false, message: "Email already registered!" };
+
+        const newUser = { username, email, password };
+        this.users.push(newUser);
+        localStorage.setItem("users", JSON.stringify(this.users));
+
+        localStorage.setItem("currentUser", JSON.stringify(newUser));
+
+        return { success: true };
+    }
+
+    login(email, password) {
+        const user = this.users.find(u => u.email === email && u.password === password);
+        if (!user) return { success: false, message: "Invalid email or password" };
+
+        localStorage.setItem("currentUser", JSON.stringify(user));
+
+        return { success: true };
+    }
+}
+
+
+const auth = new UserAuth();
+
+const form = document.getElementById("authForm");  
+const toggleText = document.getElementById("toggleText");
+let isLogin = true;
+
+function toggleMode() {
+    isLogin = !isLogin;
+
+    document.getElementById("usernameField").style.display = isLogin ? "none" : "block";
+    document.getElementById("submitBtn").innerText = isLogin ? "Login" : "Sign Up";
+    toggleText.innerHTML = isLogin
+        ? `Don't have an account? <span onclick="toggleMode()" class="link">Sign Up</span>`
+        : `Already have an account? <span onclick="toggleMode()" class="link">Login</span>`;
+}
+
+
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("username")?.value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    let result;
+
+    if (isLogin) {
+        result = auth.login(email, password);
+    } else {
+        result = auth.signup(username, email, password);
+    }
+
+    if (!result.success) {
+        alert(result.message);
+        return;
+    }
+
+    window.location.href = "index.html";
+});
+
+
     //theme
     setupThemeToggle() {
         this.themeToggle.addEventListener("click", () => {
