@@ -12,6 +12,21 @@
           overflow-x: hidden;
         }
 
+      body.dark {
+        background: #121212;
+        color: white;
+      }
+
+      .fav-btn.active {
+        color: red;
+        transform: scale(1.2);
+      }
+
+      body, .card {
+        transition: 0.3s ease;
+      }
+
+
         header {
           display: flex;
           flex-wrap: wrap;
