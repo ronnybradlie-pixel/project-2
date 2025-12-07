@@ -1,22 +1,61 @@
-// Theme toggle
-const themeToggle = document.getElementById("themeToggle");
+class MovieApp {
+  constructor() {
+    this.movies = Array.from(document.querySelectorAll('.card[data-category]'));
+    this.filterButtons = document.querySelectorAll('.filter-btn');
+    this.searchInput = document.querySelector('.search input');
+    this.themeBtn = document.getElementById('themeToggle');
+    this.signInLink = document.getElementById('signInLink');
+    this.logoutBtn = document.getElementById('logoutBtn');
 
-themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
+    this.init();
+  }
 
-    if (document.body.classList.contains("dark")) {
-        themeToggle.textContent = "Dark Mode";
-        localStorage.setItem("theme", "dark");
-    } else {
-        themeToggle.textContent = "Light Mode";
-        localStorage.setItem("theme", "light");
-    }
-});
+  init() {
+    this.loadLoginStatus();
+    this.setupLogout();
+    this.setupTheme();
+    this.setupFilters();
+    this.setupSearch();      
+    this.setupFavorites(); 
+  }
+
+setupSearch() {
+    if (!this.searchInput) return;
+
+    this.searchInput.addEventListener('keyup', () => {
+      const query = this.searchInput.value.toLowerCase();
+
+      this.movies.forEach(movie => {
+        const title = movie.querySelector('.title-sm').textContent.toLowerCase();
+        movie.style.display = title.includes(query) ? 'block' : 'none';
+      });
+    });
+  }
 
 //theme
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    themeToggle.textContent = "Dark Mode";
+ setupTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.setAttribute('data-theme', savedTheme);
+    this.updateThemeButton(savedTheme);
+
+    if (!this.themeBtn) return;
+
+    this.themeBtn.addEventListener('click', () => {
+      const current = document.body.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+
+      document.body.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      this.updateThemeButton(next);
+    });
+  }
+
+  updateThemeButton(theme) {
+    if (this.themeBtn) {
+      this.themeBtn.textContent = theme === 'light' ? 'Dark Mode' : 'Light Mode';
+    }
+  }
+
 }
 
 // Filter
@@ -120,3 +159,43 @@ username.addEventListener("click", () => {
         localStorage.setItem("username", newName);
     }
 });
+
+//log out
+const signInLink = document.getElementById("signInLink");
+const logoutBtn = document.getElementById("logoutBtn");
+if (localStorage.getItem("loggedIn") === "true") {
+    signInLink.style.display = "none"; 
+    logoutBtn.style.display = "inline-block"; 
+} else {
+    signInLink.style.display = "inline-block"; 
+    logoutBtn.style.display = "none"; 
+}
+
+logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("loggedIn");
+    alert("You have logged out!");
+    window.location.href = "login.html";
+});
+
+//oop
+document.addEventListener('DOMContentLoaded', () => {
+  new MovieApp();
+});
+
+//fetch api
+function Movie(){
+
+    const [movieList,setMovieList] = useState([])
+
+    const getMovie =()=>{
+        fetch("https://api.themoviedb.org/3/discover/movie?api_key=e01f595b687006edbd50744f4c6073bd")
+        .then(res => res.json())
+        .then(json =>console.log(json.results))
+    }
+
+    useEffect(()=>{
+    getMovie()
+    },[])
+
+    console.log(movieList)
+}

@@ -102,19 +102,27 @@
           outline: none;
         }
 
+        .logout-btn {
+     background: crimson;
+     color: white;
+     border: none;
+     padding: 6px 12px;
+     border-radius: 6px;
+     cursor: pointer;
+     font-size: 14px;
+     }
+
+     .logout-btn:hover {
+      opacity: 0.8;
+     }
+
+
         .theme-btn{
           padding: 10px 15px;
           border: none;
           border-radius: 8px;
           color: rgb(21, 20, 20);
           cursor: pointer;
-        }
-
-        .profile{
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-right: 20px;
         }
 
         .hero {
