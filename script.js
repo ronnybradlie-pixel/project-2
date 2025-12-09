@@ -188,14 +188,72 @@ function Movie(){
     const [movieList,setMovieList] = useState([])
 
     const getMovie =()=>{
-        fetch("https://api.themoviedb.org/3/discover/movie?api_key=e01f595b687006edbd50744f4c6073bd")
+        fetch("https://api.themoviedb.org/3/discover/movie")
         .then(res => res.json())
         .then(json =>console.log(json.results))
     }
 
     useEffect(()=>{
     getMovie()
-    },[])
+    })
 
     console.log(movieList)
 }
+
+ function addToFavourites(movie) {
+  let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+
+  if (!favourites.find(fav => fav.id === movie.id)) {
+    favourites.push(movie);
+    localStorage.setItem("favourites", JSON.stringify(favourites));
+    alert("Added to favourites!");
+  }
+}
+
+//favourites
+const user = JSON.parse(localStorage.getItem("loggedInUser"));
+if (!user) {
+  alert("Please login to view favourites!");
+  window.location.href = "login.html";
+}
+
+const favContainer = document.getElementById("favMovies");
+let Favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+
+if (Favourites.length === 0) {
+  favContainer.innerHTML = "<h3>No favourite movies yet </h3>";
+} else {
+  displayFavourites();
+}
+
+function displayFavourites() {
+  favContainer.innerHTML = "";
+
+  Favourites.forEach(movie => {
+    const card = document.createElement("div");
+    card.className = "movie-card";
+
+    card.innerHTML = `
+      <img src="${movie.poster}" alt="${movie.title}">
+      <h4>${movie.title}</h4>
+      <p> ${movie.rating}</p>
+      <button onclick="removeFavourite(${movie.id})">Remove</button>
+    `;
+
+    favContainer.appendChild(card);
+  });
+}
+
+// Remove Favourite Movie
+function removeFavourite(id) {
+  favourites = favourites.filter(movie => movie.id !== id);
+  localStorage.setItem("favourites", JSON.stringify(favourites));
+  displayFavourites();
+}
+
+//  Logout
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  localStorage.removeItem("loggedInUser");
+  alert("Logged out!");
+  window.location.href = "login.html";
+});

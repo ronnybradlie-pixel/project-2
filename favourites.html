@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Favourites | FlickerFeed</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+        <div class="logo">FW</div>
+    <div>
+            <h1>Flicker Watch</h1>
+            <div class="tag">Discover movies . Trailers</div>
+    </div>
+
+    <nav>
+         <ul> 
+             <li><a href="index.html" class="active">Home</a></li>
+             <li><a href="favourites.html">Favourites</a></li>
+             <li><a href="about.html">About</a></li>
+             <li><a href="signin.html" class="active">Sign In</a></li>
+             <li><button id="logoutBtn" class="logout-btn">Logout</button></li>
+         </ul> 
+         <div class="search"><input type="text" placeholder="search movies"></div>
+
+       <button id="themeToggle" class="theme-btn">Light Mode</button>
+
+    </nav>
+    </header>
+
+<section class="hero">
+  <h2>Your Favourite Movies </h2> 
+</section>
+
+<main class="container">
+  <div id="favMovies" class="movie-grid"></div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
